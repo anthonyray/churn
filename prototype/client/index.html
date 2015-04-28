@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <title>Time Series Visualized</title>
+    <script src="bower_components/d3/d3.min.js"></script>
+    <link rel="stylesheet" href="style.css" media="screen" charset="utf-8">
+  </head>
+
+  </script>
+  <body>
+    <h1>TimeLine</h1>
+
+    <div class="timeline-container">
+    </div>
+    <script type="text/javascript">
+    var dataset = [];                        //Initialize empty array
+    for (var i = 0; i < 25; i++) {           //Loop 25 times
+        var newNumber = Math.floor(Math.random() * (100 - 0)) + 0
+        dataset.push(newNumber);             //Add new number to array
+    }
+    var w = 900;
+    var h = 80;
+
+    var xmax = d3.max(dataset,function (d) { return d;})
+
+    var xmin = d3.min(dataset,function(d){ return d;})
+
+    var xScale = d3.scale.linear()
+                        .domain([0,xmax])
+                        .range([0,w])
+
+
+    var svg = d3.select('body').append('svg').attr('width',w).attr('height',h)
+
+    var circles = svg.selectAll('circle')
+                      .data(dataset)
+                      .enter()
+                      .append("circle")
+
+    circles.attr("cx", function (d){
+      return xScale(d)
+    })
+    .attr("cy",function (d) {
+      return h/2
+    })
+    .attr("r",5)
+    .attr("fill", "teal")
+    .attr("class","dot")
+
+    var xAxis = d3.svg.axis().scale(xScale).orient("bottom").ticks(5);
+
+    svg.append("g")
+      .attr("class","axis")
+      .call(xAxis)
+
+
+
+
+    </script>
+  </body>
+</html>
