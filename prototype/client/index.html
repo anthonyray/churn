@@ -46,6 +46,19 @@
 
       var svg = d3.select('body').append('svg').attr('width',w).attr('height',h)
 
+      var xAxis = d3.svg.axis().scale(xTimeScale)
+                               .orient("bottom")
+                               .ticks(d3.time.days, 1)
+                               .tickFormat(d3.time.format('%d/%m'))
+                               .tickPadding(8)
+
+      svg.append("g")
+        .attr("class","axis")
+        .attr("transform", "translate(0,"+h/2+")")
+        .call(xAxis)
+
+
+
       var circles = svg.selectAll('circle')
                         .data(data)
                         .enter()
@@ -59,17 +72,25 @@
       })
       .attr("r",5)
       .attr("fill", "teal")
-      .attr("class","dot")
+      .attr("class","dot");
 
-      var xAxis = d3.svg.axis().scale(xTimeScale)
-                               .orient("bottom")
-                               .ticks(d3.time.days, 1)
-                               .tickFormat(d3.time.format('%d/%m'))
-                               .tickPadding(8)
 
-      svg.append("g")
-        .attr("class","axis")
-        .call(xAxis)
+      var rectangles = svg.selectAll('rect')
+                          .data(data)
+                          .enter()
+                          .append('rect')
+      rectangles.attr('x',function (d) {
+        return xTimeScale(d)
+      })
+      .attr('y',function (d) {
+        return (h/2 - 5)
+      })
+      .attr('width',function (d) {
+        return 100
+      })
+      .attr('height',10)
+      .attr('fill','rgba(93, 236, 37, 0.46)')
+
     }
 
 
