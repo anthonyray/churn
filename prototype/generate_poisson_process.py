@@ -4,7 +4,13 @@ import numpy as np
 from datetime import datetime
 from datetime import timedelta
 
-s = np.random.poisson(5,1000)
+if len(sys.argv) < 2:
+    print "Wrong number of arguments. Exiting ..."
+    sys.exit()
+
+num_samples = int(sys.argv[1])
+
+s = np.random.poisson(5,num_samples)
 days_intervals = s.tolist()
 
 poisson_timedeltas = [timedelta(days=i) for i in days_intervals]
@@ -30,8 +36,9 @@ from time import time
 start = time()
 try:
     writer = csv.writer(f,dialect=csv.get_dialect('commas'))
+    writer.writerow(('date',))
     for poisson in poisson_dates_string:
-        writer.writerow((poisson,1))
+        writer.writerow((poisson,))
 finally:
     f.close()
 
