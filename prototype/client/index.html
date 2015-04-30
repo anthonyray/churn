@@ -7,7 +7,7 @@
 
   </script>
   <body>
-    <h1>TimeLine</h1>
+    <h1>History</h1>
 
     <div class="timeline-container">
     </div>
@@ -58,6 +58,44 @@
         .call(xAxis)
 
 
+      rect_data = []
+
+      for (var i = 0 ; i < data.length  - 1 ; i++){
+        rect_data[i] = {
+          last : data[i+1],
+          first : data[i],
+          duration : data[i+1] - data[i]
+      }
+    }
+
+      var rectangles = svg.selectAll('rect')
+                          .data(rect_data)
+                          .enter()
+                          .append('rect')
+      rectangles.attr('x',function (d) {
+        return xTimeScale(d.first)
+      })
+      .attr('y',function (d) {
+        return (h/2 - 5)
+      })
+      .attr('width',function (d) {
+        return (xTimeScale(d.last) - xTimeScale(d.first))
+      })
+      .attr('height',10)
+      .attr('fill',function (d) {
+        var diffDays = Math.ceil(d.duration / (1000 * 3600 * 24));
+        console.log(diffDays);
+        if (diffDays < 3){
+          return 'rgba(93, 236, 37, 0.46)';
+        }
+        else if (diffDays < 5){
+          return 'rgba(255, 145, 0, 0.69)';
+        }
+        else{
+          return 'rgba(255, 0, 12, 0.58)';
+        }
+
+      });
 
       var circles = svg.selectAll('circle')
                         .data(data)
@@ -73,23 +111,6 @@
       .attr("r",5)
       .attr("fill", "teal")
       .attr("class","dot");
-
-
-      var rectangles = svg.selectAll('rect')
-                          .data(data)
-                          .enter()
-                          .append('rect')
-      rectangles.attr('x',function (d) {
-        return xTimeScale(d)
-      })
-      .attr('y',function (d) {
-        return (h/2 - 5)
-      })
-      .attr('width',function (d) {
-        return 100
-      })
-      .attr('height',10)
-      .attr('fill','rgba(93, 236, 37, 0.46)')
 
     }
 

@@ -37,7 +37,7 @@ start = time()
 try:
     writer = csv.writer(f,dialect=csv.get_dialect('commas'))
     writer.writerow(('date',))
-    for poisson in poisson_dates_string:
+    for poisson in enumerate(poisson_dates_string):
         writer.writerow((poisson,))
 finally:
     f.close()
