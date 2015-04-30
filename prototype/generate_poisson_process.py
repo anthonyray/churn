@@ -16,7 +16,7 @@ days_intervals = s.tolist()
 poisson_timedeltas = [timedelta(days=i) for i in days_intervals]
 
 start_date = "2015-01-01"
-format_date = "%Y-%M-%d"
+format_date = "%Y-%m-%d"
 
 poisson_dates = list()
 
@@ -24,7 +24,7 @@ poisson_dates = list()
 poisson_dates.append(datetime.strptime(start_date,format_date))
 
 for i,delta in enumerate(poisson_timedeltas):
-    d = poisson_dates[i] + delta
+    d = poisson_dates[len(poisson_dates) - 1] + delta
     poisson_dates.append(d)
 
 
@@ -37,7 +37,7 @@ start = time()
 try:
     writer = csv.writer(f,dialect=csv.get_dialect('commas'))
     writer.writerow(('date',))
-    for poisson in enumerate(poisson_dates_string):
+    for poisson in poisson_dates_string:
         writer.writerow((poisson,))
 finally:
     f.close()
