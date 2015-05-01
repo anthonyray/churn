@@ -10,7 +10,7 @@ if len(sys.argv) < 2:
 
 num_samples = int(sys.argv[1])
 
-s = np.random.poisson(5,num_samples)
+s = np.random.poisson(3,num_samples)
 days_intervals = s.tolist()
 
 poisson_timedeltas = [timedelta(days=i) for i in days_intervals]
