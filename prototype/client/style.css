@@ -1,10 +1,17 @@
-/*@import url(http://fonts.googleapis.com/css?family=Ubuntu);*/
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
 
 body{
   background-color : #fbfcfc;
   color : #34495e;
   font-family: 'Ubuntu', sans-serif;
 }
+
+.widget{
+  width : 850px;
+  margin : auto;
+}
+
+
 
 .axis path,
 .axis line {
